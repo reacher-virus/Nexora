@@ -454,6 +454,14 @@ function PredictionResultView({
             <span className="font-semibold text-emerald-700">{renderValue(receipt.consensus)}</span>
           </h3>
           <p className="text-xs text-gray-400 mt-1">{receipt.consensus_label}</p>
+		{receipt.reliability_score != null && (
+  <div className="mt-3">
+    <p className="text-xs text-gray-500">Prediction Reliability</p>
+    <p className="text-2xl font-semibold text-emerald-700">
+      {receipt.reliability_score.toFixed(1)}%
+    </p>
+  </div>
+)}
         </div>
         <div className="flex items-center gap-2 text-xs text-green-700 bg-green-50 px-3 py-2 rounded-lg border border-green-100">
           <CheckCircle2 className="w-4 h-4" />

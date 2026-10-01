@@ -294,7 +294,7 @@ class PredictionReceipt(BaseModel):
     consensus: Any = None
     consensus_label: str = ""
     created_at: str
-
+    reliability_score: float | None = None
 
 class DatasetHistoryItem(BaseModel):
     dataset_id: str

@@ -66,4 +66,5 @@ export interface PredictionReceipt {
   consensus: string | number;
   consensus_label: string;
   created_at: string;
+  reliability_score: number | null;	
 }

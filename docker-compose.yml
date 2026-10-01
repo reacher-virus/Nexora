@@ -47,7 +47,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        - VITE_API_BASE_URL=http://localhost:8000/api
+        - VITE_API_BASE_URL=/api
     container_name: nexora-frontend
     ports:
       - "3000:80"

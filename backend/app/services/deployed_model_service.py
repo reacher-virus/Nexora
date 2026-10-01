@@ -338,6 +338,43 @@ def run_saved_prediction(
         )
 
     consensus, consensus_label = _consensus(outputs, status.problem_type)
+
+    if status.problem_type == "classification":
+        agreement = sum(
+            str(output.prediction) == str(consensus)
+            for output in outputs
+        ) / len(outputs)
+
+        confidences = [
+            output.confidence
+            for output in outputs
+            if output.confidence is not None
+        ]
+
+        confidence_score = (
+            sum(confidences) / len(confidences)
+            if confidences
+            else agreement
+        )
+
+        reliability_score = round(
+            (agreement * 0.6 + confidence_score * 0.4) * 100,
+            1,
+        )
+    else:
+        values = [float(output.prediction) for output in outputs]
+        mean_value = sum(values) / len(values)
+
+        if len(values) == 1 or mean_value == 0:
+            reliability_score = 100.0 if len(values) == 1 else None
+        else:
+            variation = (
+                sum(abs(value - mean_value) for value in values)
+                / len(values)
+                / abs(mean_value)
+            )
+            reliability_score = round(max(0, 1 - variation) * 100, 1)
+
     return PredictionReceipt(
         dataset_id=dataset_id,
         target_column=status.target_column,
@@ -349,6 +386,7 @@ def run_saved_prediction(
         consensus=consensus,
         consensus_label=consensus_label,
         created_at=datetime.now(UTC).isoformat(),
+        reliability_score=reliability_score,
     )
 
 
