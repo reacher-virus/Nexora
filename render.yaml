@@ -25,7 +25,7 @@ services:
       - key: FIREBASE_PROJECT_ID
         value: nexora-75056
       - key: FIREBASE_CREDENTIALS_FILE
-        value: firebase-service-account.json
+        
         sync: false
       - key: FIREBASE_CREDENTIALS_JSON
         sync: false
